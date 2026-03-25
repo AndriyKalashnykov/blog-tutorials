@@ -1,9 +1,16 @@
 name: Build Maven Projects
 on:
   push:
+    branches: [master]
+    tags: ['v*']
   pull_request:
   schedule:
     - cron: '0 5 * * SUN'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-java-8-and-17-projects:
     strategy:

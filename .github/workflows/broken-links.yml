@@ -1,9 +1,16 @@
 name: Check for broken links
 on:
   push:
+    branches: [master]
+    tags: ['v*']
   pull_request:
   schedule:
     - cron: '0 5 * * SUN'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   broken-link-check:
     runs-on: ubuntu-20.04
