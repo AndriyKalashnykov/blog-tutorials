@@ -1,9 +1,16 @@
 name: Build Gradle Projects
 on:
   push:
+    branches: [master]
+    tags: ['v*']
   pull_request:
   schedule:
     - cron: '0 5 * * SUN'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-jdk8:
     runs-on: ubuntu-20.04

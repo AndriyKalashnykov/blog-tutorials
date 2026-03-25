@@ -1,6 +1,14 @@
 name: Maven GitHub Actions Sample
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [master]
+    tags: ['v*']
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   compile:
